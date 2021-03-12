@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
+const App = () => {
+
+  const getMedia =  async (state) => {
+    const constraints = { audio: true, video: true };
+  
+    try {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+      /* ストリームを使用 */
+    } catch(err) {
+      /* エラーを処理 */
+      console.log(err);
+    }
+  }
+  getMedia();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Hello, React!</div>
     </div>
   );
 }
