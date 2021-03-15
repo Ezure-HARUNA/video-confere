@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button }  from '@material-ui/core'
 
 const App = () => {
 
@@ -15,9 +16,7 @@ const App = () => {
   }
   getMedia();
   return (
-    <div className="App">
-      <div>Hello, React!</div>
-    </div>
+    <Button color="primary" variant="contained">Hello, World!</Button>
   );
 }
 
