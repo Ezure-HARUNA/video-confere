@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -41,9 +41,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn( { remotePeerName, setRemotePeerName }) {
+export default function SignIn( { remotePeerName, setRemotePeerName, localPeerName }) {
   const label = '相手の名前';
   const classes = useStyles();
+  const [ name, setName ] = useState('');
+  const [ disabled, setDisabled] = useState(true);
+  const [ isComposed, setIsComposed ] = useState(false);
+
+  useEffect(() => {
+    const disabled = name === '';
+    setDisabled(disabled);
+  }, [name]);
+
+  const initializeRemotePeer = useCallback(
+    (e) => {
+      setRemotePeerName(name)
+      e.preventDefault();
+    },
+    [name, setRemotePeerName]
+  );
+
+  if (localPeerName === '') return <></>;
+  if (remotePeerName !== '') return <></>;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,13 +81,22 @@ export default function SignIn( { remotePeerName, setRemotePeerName }) {
             fullWidth
             name="name"
             label={label}
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            onChange={(e) => setName(e.target.value)}
+            onCompositionEnd={() => setIsComposed(false)}
+            onCompositionStart={() => setIsComposed(true)}
+            onKeyDown={(e) => {
+              if (isComposed) return;
+              if (e.target.value === '') return;
+              if (e.key === 'Enter') {initializeRemotePeer(e);}
+              
+            }}
+            value={name}
           />
           <Button
             type="submit"
             fullWidth
+            disabled={disabled}
+            onClick={(e) => { initializeRemotePeer(e)}}
             variant="contained"
             color="primary"
             className={classes.submit}

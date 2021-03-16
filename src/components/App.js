@@ -19,6 +19,8 @@ const App = () => {
     }
   }
   getMedia();
+
+
   return (
     <>
       <InputFormLocal
@@ -26,6 +28,7 @@ const App = () => {
         setLocalPeerName={setLocalPeerName}
       />
       <InputFormRemote
+        localPeerName={localPeerName}
         remotePeerName={remotePeerName}
         setRemotePeerName={setRemotePeerName}
       />
