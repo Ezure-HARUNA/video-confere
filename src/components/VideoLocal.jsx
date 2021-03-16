@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
+import Video from './Video';
 
-const VideoLocal = () => {
+const VideoLocal = ({ name }) => {
     const videoRef = useRef(null);
     const currentVideoRef = videoRef.current;
     
@@ -18,12 +19,12 @@ const VideoLocal = () => {
             }
         }
 
-        currentVideoRef.srcObject = getMedia();
+        getMedia();
     },[currentVideoRef])
 
     return (
         <div>
-            
+          <Video isLocal={true} name={name} videoRef={videoRef}/>
         </div>
     )
 }
